@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(235, 215, 215);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: rgb(211, 157, 204);
+            border: 1px solid #696161;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+
+        .form-group {
+            margin: 10px 0;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        button {
+            background-color: #490438;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2 style="text-align: center;">User Details</h2>
+        <div class="form-group">
+            <label for="s-name">Name:</label>
+            <input type="text" name="name" id="s-name">
+        </div>
+        <div class="form-group">
+            <label for="s-address">Address:</label>
+            <input type="text" name="address" id="s-address">
+        </div>
+        <div class="form-group">
+            <label for="s-cities">City:</label>
+            <select name="cities" id="s-cities">
+                <option value="Lahore">Lahore</option>
+                <option value="Karachi">Karachi</option>
+                <option value="Islamabad">Islamabad</option>
+                <option value="Peshawar">Peshawar</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Gender:</label><br>
+            <input type="radio" name="gender" value="Male" id="male"><label for="male">Male</label>
+            <input type="radio" name="gender" value="Female" id="female"><label for "female">Female</label>
+            <input type="radio" name="gender" value="Other" id="other"><label for="other">Other</label>
+        </div>
+        <div class="form-group">
+            <label>Hobbies:</label><br>
+            <input type="checkbox" name="hobbies[]" value="comp" id="comp"><label for="comp">Computer</label>
+            <input type="checkbox" name="hobbies[]" value="game" id="game"><label for="game">Games</label>
+            <input type="checkbox" name="hobbies[]" value="trav" id="trav"><label for="trav">Travelling</label>
+            <input type="checkbox" name="hobbies[]" value="swim" id="swim"><label for="swim">Swimming</label>
+            <input type="checkbox" name="hobbies[]" value="read" id="read"><label for="read">Reading</label>
+        </div>
+        <div class="form-group" style="text-align: center;">
+            <button onclick="Details()">Save Data</button>
+        </div>
+        <div id="result"></div>
+    </div>
+    <script>
+        function Details() {
+            var Sname = document.getElementById("s-name").value;
+            var Address = document.getElementById("s-address").value;
+            var cityName = document.getElementById("s-cities").value;
+            var genderSelection = document.querySelector('input[name="gender"]:checked');
+            
+            if (genderSelection) {
+                genderSelection = genderSelection.value;
+            } else {
+                genderSelection = "Not specified";
+            }
+
+            var selectedHobbies = [];
+            var hobbies = document.getElementsByName("hobbies[]");
+            for (var i = 0; i < hobbies.length; i++) {
+                if (hobbies[i].checked) {
+                    selectedHobbies.push(hobbies[i].nextElementSibling.textContent);
+                }
+            }
+
+            var result = "<h3>Form Data:</h3><p><strong>Name:</strong> " + Sname + "</p>" +
+                         "<p><strong>Address:</strong> " + Address + "</p>" +
+                         "<p><strong>City:</strong> " + cityName + "</p>" +
+                         "<p><strong>Gender:</strong> " + genderSelection + "</p>";
+
+            if (selectedHobbies.length > 0) {
+                result += "<p><strong>Hobbies:</strong> " + selectedHobbies.join(", ") + "</p>";
+            } else {
+                result += "<p><strong>Hobbies:</strong> None selected</p>";
+            }
+
+            document.getElementById("result").innerHTML = result;
+        }
+    </script>
+</body>
+</html>
